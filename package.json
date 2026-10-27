@@ -1,0 +1,21 @@
+{
+  "name": "api-racas-equinas",
+  "version": "1.0.0",
+  "description": "API REST para consulta de raças de cavalos, com dados locais e estrutura preparada para persistência futura.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "supertest": "^7.1.1"
+  }
+}
