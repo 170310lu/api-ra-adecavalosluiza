@@ -1,4 +1,4 @@
-const racasIniciais = require('../data/racas');
+const prisma = require('../config/database');
 
 function normalizar(texto) {
   return texto
@@ -7,19 +7,31 @@ function normalizar(texto) {
     .toLocaleLowerCase('pt-BR');
 }
 
-const racas = [...racasIniciais];
-
 function listarTodas() {
-  return [...racas];
+  return prisma.raca.findMany({ orderBy: { id: 'asc' } });
 }
 
 function buscarPorId(id) {
-  return racas.find((raca) => raca.id === id) || null;
+  return prisma.raca.findUnique({ where: { id } });
 }
 
 function buscarPorNome(nome) {
-  const termo = normalizar(nome);
-  return racas.filter((raca) => normalizar(raca.nome).includes(termo));
+  return prisma.raca.findMany({ orderBy: { id: 'asc' } }).then((racas) => {
+    const termo = normalizar(nome);
+    return racas.filter((raca) => normalizar(raca.nome).includes(termo));
+  });
 }
 
-module.exports = { listarTodas, buscarPorId, buscarPorNome };
+function criar(dados) {
+  return prisma.raca.create({ data: dados });
+}
+
+function atualizar(id, dados) {
+  return prisma.raca.update({ where: { id }, data: dados });
+}
+
+function excluir(id) {
+  return prisma.raca.delete({ where: { id } });
+}
+
+module.exports = { listarTodas, buscarPorId, buscarPorNome, criar, atualizar, excluir };
